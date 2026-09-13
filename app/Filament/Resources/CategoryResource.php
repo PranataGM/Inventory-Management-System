@@ -13,7 +13,8 @@ use Filament\Tables\Table;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Master Data';
     protected static ?string $navigationLabel = 'Kategori';
     protected static ?string $pluralModelLabel = 'Kategori';
 

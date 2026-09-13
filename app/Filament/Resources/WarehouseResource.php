@@ -13,8 +13,9 @@ use Filament\Tables\Table;
 class WarehouseResource extends Resource
 {
     protected static ?string $model = Warehouse::class;
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    protected static ?string $navigationLabel = 'Gudang';
+    protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
+    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationLabel = 'Lokasi / Gudang';
     protected static ?string $pluralModelLabel = 'Gudang';
 
     public static function canCreate(): bool { return auth()->user()->hasRole('Admin'); }

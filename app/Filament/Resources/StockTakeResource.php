@@ -15,7 +15,8 @@ class StockTakeResource extends Resource
 {
     protected static ?string $model = StockTake::class;
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
-    protected static ?string $navigationLabel = 'Opname Stok';
+    protected static ?string $navigationGroup = 'Transaksi Gudang';
+    protected static ?string $navigationLabel = 'Stock Opname';
     protected static ?string $pluralModelLabel = 'Opname Stok';
 
     public static function canCreate(): bool { return auth()->user()->hasRole('Admin'); }

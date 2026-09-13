@@ -16,8 +16,9 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
     protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationGroup = 'Master Data';
     protected static ?string $navigationLabel = 'Katalog Barang';
-    protected static ?string $pluralModelLabel = 'Barang';
+    protected static ?string $pluralModelLabel = 'Katalog Barang';
 
     public static function canCreate(): bool { return auth()->user()->hasRole('Admin'); }
     public static function canEdit($record): bool { return auth()->user()->hasRole('Admin'); }
