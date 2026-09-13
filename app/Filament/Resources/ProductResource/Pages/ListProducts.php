@@ -20,7 +20,6 @@ class ListProducts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
             Actions\ImportAction::make()
                 ->importer(ProductImporter::class)
                 ->label('Import Barang (CSV/Excel)'),
