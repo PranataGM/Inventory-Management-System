@@ -69,14 +69,27 @@ class DummyDataSeeder extends Seeder
         $adminUser = User::where('email', 'admin@inventory.test')->first();
         $adminId = $adminUser ? $adminUser->id : null;
 
+        $indonesianProducts = [
+            ['name' => 'Indomie Goreng Spesial', 'price' => 3000, 'unit' => 'Pcs'],
+            ['name' => 'Air Mineral Aqua 600ml', 'price' => 3500, 'unit' => 'Botol'],
+            ['name' => 'Kopi Kapal Api Sachet', 'price' => 1500, 'unit' => 'Sachet'],
+            ['name' => 'Minyak Goreng Bimoli 2L', 'price' => 38000, 'unit' => 'Pouch'],
+            ['name' => 'Tolak Angin Cair Sido Muncul', 'price' => 4500, 'unit' => 'Sachet'],
+            ['name' => 'Sabun Cair Lifebuoy 450ml', 'price' => 25000, 'unit' => 'Pouch'],
+            ['name' => 'Pasta Gigi Pepsodent 190g', 'price' => 15000, 'unit' => 'Tube'],
+            ['name' => 'Beras Maknyuss 5Kg', 'price' => 75000, 'unit' => 'Karung'],
+            ['name' => 'Buku Tulis Sinar Dunia 38 Lembar', 'price' => 4000, 'unit' => 'Pcs'],
+            ['name' => 'Deterjen Rinso Anti Noda 700g', 'price' => 22000, 'unit' => 'Bungkus'],
+        ];
+
         // 5. Buat 10 Produk Dummy
-        for ($i = 0; $i < 10; $i++) {
-            $purchasePrice = $faker->numberBetween(10, 500) * 1000;
-            $sellingPrice = $purchasePrice + ($faker->numberBetween(10, 50) * 1000);
+        foreach ($indonesianProducts as $index => $prodData) {
+            $purchasePrice = $prodData['price'];
+            $sellingPrice = $purchasePrice + ($purchasePrice * 0.2); // margin 20%
 
             $product = Product::create([
-                'name' => 'Produk ' . $faker->words(2, true),
-                'sku' => 'SKU-' . $faker->unique()->numerify('#####'),
+                'name' => $prodData['name'],
+                'sku' => 'SKU-' . str_pad($index + 1, 5, '0', STR_PAD_LEFT),
                 'category_id' => $faker->randomElement($allCategories),
                 'unit_id' => $faker->randomElement($allUnits),
                 'supplier_id' => $faker->randomElement($allSuppliers),
@@ -94,7 +107,7 @@ class DummyDataSeeder extends Seeder
                 'user_id' => $adminId,
                 'type' => 'in',
                 'quantity' => 100, // 100 stok
-                'reason' => 'Stok awal (dummy data)',
+                'reason' => 'Stok awal',
             ]);
 
             // Simulasi stok keluar untuk memicu analitik
@@ -104,7 +117,7 @@ class DummyDataSeeder extends Seeder
                 'user_id' => $adminId,
                 'type' => 'out',
                 'quantity' => $faker->numberBetween(5, 25),
-                'reason' => 'Penjualan dummy',
+                'reason' => 'Penjualan ke toko cabang',
             ]);
             
             \Illuminate\Support\Facades\DB::table('stock_movements')
