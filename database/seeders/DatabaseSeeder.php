@@ -32,5 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         $staff->assignRole('Staff Gudang');
+
+        $this->call(DummyDataSeeder::class);
     }
 }
