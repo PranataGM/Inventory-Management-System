@@ -28,12 +28,15 @@ class StockMovementResource extends Resource
                 Forms\Components\Select::make('product_id')
                     ->label('Barang')
                     ->relationship('product', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required()
-                    ->searchable(),
+                    ->live(),
                 Forms\Components\Select::make('warehouse_id')
                     ->label('Gudang')
                     ->relationship('warehouse', 'name')
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\Select::make('type')
                     ->label('Tipe Mutasi')
                     ->options([
@@ -42,15 +45,39 @@ class StockMovementResource extends Resource
                         'retur_in' => 'Retur Masuk (Pengembalian Pelanggan)',
                         'retur_out' => 'Retur Keluar (Pengembalian ke Pemasok)',
                     ])
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\TextInput::make('quantity')
-                    ->label('Jumlah')
+                    ->label('Kuantitas')
                     ->required()
                     ->numeric()
-                    ->minValue(1),
+                    ->minValue(1)
+                    ->rule(static function (Forms\Get $get) {
+                        return function (string $attribute, $value, \Closure $fail) use ($get) {
+                            if (in_array($get('type'), ['out', 'retur_out'])) {
+                                $currentStock = \App\Models\ProductWarehouse::where('product_id', $get('product_id'))
+                                    ->where('warehouse_id', $get('warehouse_id'))
+                                    ->value('stock_quantity') ?? 0;
+                                if ($value > $currentStock) {
+                                    $fail("Stok tidak mencukupi! Sisa stok saat ini hanya {$currentStock}.");
+                                }
+                            }
+                        };
+                    }),
                 Forms\Components\TextInput::make('reason')
-                    ->label('Keterangan')
+                    ->label('Keterangan / Alasan')
                     ->maxLength(255),
+                Forms\Components\Select::make('user_id')
+                    ->label('Petugas (Otomatis)')
+                    ->relationship('user', 'name')
+                    ->default(fn () => auth()->id())
+                    ->disabled()
+                    ->dehydrated(),
+                Forms\Components\DateTimePicker::make('created_at')
+                    ->label('Waktu Transaksi')
+                    ->default(now())
+                    ->disabled()
+                    ->dehydrated(false),
             ]);
     }
 

@@ -47,8 +47,18 @@ class ListProducts extends ListRecords
                     TextInput::make('quantity')
                         ->label('Jumlah')
                         ->numeric()
+                        ->required()
                         ->minValue(1)
-                        ->required(),
+                        ->rule(static function (\Filament\Forms\Get $get) {
+                            return function (string $attribute, $value, \Closure $fail) use ($get) {
+                                $currentStock = \App\Models\ProductWarehouse::where('product_id', $get('product_id'))
+                                    ->where('warehouse_id', $get('from_warehouse_id'))
+                                    ->value('stock_quantity') ?? 0;
+                                if ($value > $currentStock) {
+                                    $fail("Stok di gudang asal tidak mencukupi! Sisa: {$currentStock}.");
+                                }
+                            };
+                        }),
                 ])
                 ->action(function (array $data) {
                     DB::transaction(function () use ($data) {
