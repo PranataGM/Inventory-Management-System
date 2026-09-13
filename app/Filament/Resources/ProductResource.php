@@ -43,6 +43,16 @@ class ProductResource extends Resource
                     ->required()
                     ->searchable()
                     ->preload(),
+                Forms\Components\Select::make('unit_id')
+                    ->label('Satuan')
+                    ->relationship('unit', 'name')
+                    ->searchable()
+                    ->preload(),
+                Forms\Components\Select::make('supplier_id')
+                    ->label('Pemasok')
+                    ->relationship('supplier', 'name')
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\TextInput::make('purchase_price')
                     ->label('Harga Beli')
                     ->required()
@@ -70,6 +80,8 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label('Nama Barang')->searchable(),
                 Tables\Columns\TextColumn::make('sku')->label('SKU')->searchable(),
                 Tables\Columns\TextColumn::make('category.name')->label('Kategori')->sortable(),
+                Tables\Columns\TextColumn::make('unit.name')->label('Satuan')->sortable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('supplier.name')->label('Pemasok')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('total_stock')
                     ->label('Total Stok')
                     ->badge()
