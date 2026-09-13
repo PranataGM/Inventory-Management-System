@@ -39,6 +39,8 @@ class StockMovementResource extends Resource
                     ->options([
                         'in' => 'Barang Masuk',
                         'out' => 'Barang Keluar',
+                        'retur_in' => 'Retur Masuk (Pengembalian Pelanggan)',
+                        'retur_out' => 'Retur Keluar (Pengembalian ke Pemasok)',
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('quantity')
@@ -85,6 +87,8 @@ class StockMovementResource extends Resource
                 Tables\Filters\SelectFilter::make('type')->options([
                     'in' => 'Barang Masuk',
                     'out' => 'Barang Keluar',
+                    'retur_in' => 'Retur Masuk',
+                    'retur_out' => 'Retur Keluar',
                     'transfer' => 'Transfer Gudang',
                     'adjustment' => 'Penyesuaian Opname',
                 ])->label('Filter Tipe'),

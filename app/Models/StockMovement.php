@@ -22,13 +22,13 @@ class StockMovement extends Model {
                 ['stock_quantity' => 0]
             );
 
-            if ($movement->type === 'in') {
+            if (in_array($movement->type, ['in', 'retur_in', 'adjustment'])) {
                 $productWarehouse->increment('stock_quantity', $movement->quantity);
-            } elseif ($movement->type === 'out') {
+            } elseif (in_array($movement->type, ['out', 'retur_out'])) {
+                if ($productWarehouse->stock_quantity < $movement->quantity) {
+                    throw new \Exception("Stok tidak mencukupi untuk dikeluarkan/retur.");
+                }
                 $productWarehouse->decrement('stock_quantity', $movement->quantity);
-            } elseif ($movement->type === 'adjustment') {
-                $productWarehouse->stock_quantity += $movement->quantity;
-                $productWarehouse->save();
             }
         });
     }
