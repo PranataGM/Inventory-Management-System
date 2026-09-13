@@ -1,6 +1,6 @@
 # 📦 Sistem Manajemen Inventaris Enterprise (TALL Stack)
 
-Sistem Manajemen Inventaris (Inventory Management System) skala _enterprise_ yang dibangun dengan menggunakan **Laravel 11, Filament v3, Tailwind CSS, dan MySQL**. Aplikasi ini dirancang untuk mencatat pergerakan barang, menganalisis ketersediaan stok, menangani retur, hingga memprediksi rasio perputaran barang di multi-gudang secara akurat dan real-time.
+Sistem Manajemen Inventaris (Inventory Management System) skala _enterprise_ yang dibangun dengan menggunakan **Laravel 13, Filament v3, Tailwind CSS, dan MySQL**. Aplikasi ini dirancang untuk mencatat pergerakan barang, menganalisis ketersediaan stok, menangani retur, hingga memprediksi rasio perputaran barang di multi-gudang secara akurat dan real-time.
 
 ---
 
@@ -39,7 +39,7 @@ Sistem transaksi dengan validasi *real-time* yang mustahil menyebabkan stok minu
 ---
 
 ## 🛠️ Prasyarat (Requirements)
-- **PHP** 8.2+
+- **PHP** 8.3+
 - **Composer**
 - **Node.js** & NPM
 - **MySQL** / MariaDB
